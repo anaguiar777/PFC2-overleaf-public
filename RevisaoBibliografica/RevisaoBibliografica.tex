@@ -1,0 +1,150 @@
+\chapter[Fundamentos Teóricos e Revisão Bibliográfica]{Fundamentos Teóricos e Revisão \mbox{Bibliográfica}}
+
+Esta seção reúne os conceitos e trabalhos que fundamentam o desenvolvimento da interface proposta. A revisão concentra-se em quatro eixos: percepção musical por pessoas surdas ou com deficiência auditiva, uso de estímulos vibrotáteis em contextos musicais, instrumentos musicais digitais acessíveis e dispositivos vestíveis destinados à apresentação de informação tátil. Aplicações em musicoterapia e reabilitação motora são discutidas apenas como contextos correlatos, sem integrar o escopo experimental desta monografia.
+
+\section{Surdez, Deficiência Auditiva e Percepção Musical}
+
+A experiência musical resulta da combinação de características como ritmo, intensidade, timbre, altura e organização temporal. Embora a audição desempenhe papel central nessa experiência, sinais visuais, vibrações e informações proprioceptivas também podem participar da percepção e da interação musical.
+
+Entre pessoas surdas ou com deficiência auditiva, a experiência com música não é homogênea. Grau e tipo de perda auditiva, momento de ocorrência da perda, uso de aparelhos auditivos ou implantes cocleares e experiência musical prévia influenciam as informações disponíveis a cada indivíduo \cite{fletcher2021}. Por essa razão, soluções de acessibilidade não devem pressupor uma única forma de percepção musical.
+
+A percepção de emoção musical por estudantes surdos foi investigada em estudo que identificou contribuição de características como ritmo, textura e timbre para a interpretação da música \cite{darrow2006}. O resultado reforça que aspectos da experiência musical podem permanecer acessíveis mesmo quando a percepção convencional de altura ou melodia é limitada.
+
+Dispositivos de auxílio à audição também apresentam restrições específicas para sinais musicais. A fala e a música possuem requisitos distintos de representação temporal e espectral, e parte das características musicais pode ser transmitida com resolução insuficiente por aparelhos auditivos e implantes cocleares \cite{fletcher2021}. Esse cenário justifica a investigação de modalidades sensoriais complementares, sem assumir que elas substituam a audição.
+
+A proposta desta monografia parte dessa perspectiva. Tato e visão são empregados para representar informações associadas à interação com o instrumento, e não para reproduzir integralmente o conteúdo acústico. A correspondência pretendida é funcional: ocorrência de eventos, intensidade relativa do gesto e organização temporal podem ser apresentadas por canais adicionais enquanto a experiência sonora, quando disponível, permanece independente.
+
+\section{Percepção Vibrotátil da Música}
+
+Estímulos vibrotáteis correspondem a vibrações aplicadas ao corpo de forma intencional para transmitir informação. Essa modalidade tem sido estudada em tecnologias assistivas, interação humano-computador e interfaces musicais porque a pele é capaz de perceber variações mecânicas de intensidade, frequência e duração dentro de limites próprios \cite{paisa2023}.
+
+A organização temporal da música é particularmente compatível com a estimulação tátil. Em crianças com deficiência auditiva, a complementação vibrotátil melhorou a identificação de mudanças rítmicas em comparação com condições sem esse recurso \cite{darrowgoll1989}. Em estudo posterior sobre alterações de altura musical, os resultados apresentaram maior variabilidade, indicando que diferentes propriedades musicais não são transmitidas pelo tato com a mesma eficiência \cite{darrow1992}.
+
+A apresentação de notas musicais diretamente sobre a pele foi avaliada por \textcite{hopkins2016}, que analisou limiares, faixa dinâmica e discriminação de frequência em adultos com audição normal e com deficiência auditiva. O estudo demonstrou que a pele pode receber informação musical por vibração, mas também evidenciou limites que devem ser considerados no projeto de dispositivos hápticos.
+
+Resultados semelhantes aparecem em experimentos sobre timbre. Participantes ouvintes e surdos apresentaram desempenho acima do acaso em determinadas tarefas de discriminação exclusivamente vibrotátil, o que indica que diferenças entre sinais podem produzir padrões táteis distinguíveis \cite{russo2012}. Em outro experimento, participantes surdos e ouvintes sincronizaram movimentos corporais à pulsação de música eletrônica apresentada por uma plataforma vibratória, mostrando que informação temporal pode sustentar sincronização mesmo sem apresentação auditiva \cite{tranchant2017}.
+
+O conjunto desses estudos sustenta o uso do tato como canal complementar, sobretudo para informações temporais e variações de intensidade. Não há, contudo, equivalência geral entre informação sonora e informação vibrotátil. A revisão de \textcite{paisa2023} mostra que desempenho e experiência dependem do atuador, da região corporal, do tipo de sinal, da estratégia de mapeamento e da tarefa proposta.
+
+No sistema desenvolvido, optou-se por não estimar características do áudio. A variável de entrada é obtida diretamente do gesto executado no controlador MIDI. O parâmetro \textit{velocity} é convertido em um comando PWM e passa a representar, no domínio de controle, a intensidade relativa associada ao acionamento do \textit{pad}.
+
+\section{Feedback Háptico e Vibrotátil em Interfaces Musicais}
+
+O termo \textit{feedback} háptico abrange realimentações percebidas pelo tato e pela propriocepção. O \textit{feedback} vibrotátil constitui um caso específico no qual atuadores geram vibrações em contato com o corpo \cite{paisa2023}. Em instrumentos acústicos, respostas mecânicas surgem naturalmente da interação com cordas, superfícies e corpos ressonantes; em instrumentos digitais, parte dessa realimentação pode ser reduzida ou inexistente.
+
+A incorporação de \textit{feedback} háptico a instrumentos digitais tem sido investigada tanto para modificar a sensação de execução quanto para transmitir informação adicional. Diferentes modalidades de realimentação, incluindo força e vibração, alteram a experiência do músico durante tarefas de interação com instrumentos digitais \cite{young2017}.
+
+Em aplicações de acessibilidade, a vibração pode cumprir função informacional. A revisão de 63 trabalhos realizada por \textcite{paisa2023} identificou grande diversidade de atuadores, posições corporais, estratégias de processamento e formas de mapeamento entre sinais auditivos e estímulos táteis. Essa diversidade mostra que a escolha do mapeamento não é um detalhe de implementação, mas uma decisão central do projeto.
+
+A região corporal também interfere na solução. Mãos e dedos apresentam alta relevância perceptiva, mas podem estar ocupados durante a execução musical. Braço e punho permitem apresentar estímulos sem impedir o uso das mãos no instrumento, justificando a escolha de uma estrutura vestível no membro superior para o protótipo desta monografia.
+
+A intensidade do gesto foi escolhida como variável de interesse porque está disponível diretamente no evento MIDI e pode ser associada a diferentes níveis de acionamento sem inferência a partir do áudio. A estratégia não pressupõe que a variação de PWM produza sensação linear de intensidade; essa relação depende da resposta eletromecânica do atuador e da percepção do usuário, aspectos que exigem caracterização específica.
+
+\section{Interfaces Musicais Digitais Acessíveis}
+
+Instrumentos musicais digitais, ou DMIs (\textit{Digital Musical Instruments}), utilizam sensores, interfaces eletrônicas e processamento computacional para relacionar gestos de controle à produção musical. A separação entre gesto, processamento e saída permite configurar formas de interação diferentes das encontradas em instrumentos acústicos.
+
+Quando projetados para ampliar a participação de pessoas com diferentes condições físicas, sensoriais ou cognitivas, esses sistemas são frequentemente descritos como instrumentos musicais digitais acessíveis, ou ADMIs (\textit{Accessible Digital Musical Instruments}). Uma revisão sistemática de 113 publicações identificou 83 instrumentos destinados a práticas inclusivas, com soluções baseadas em controladores tangíveis, sistemas sem contato, interfaces cérebro-computador, rastreamento ocular e dispositivos vestíveis \cite{frid2019}.
+
+A literatura de ADMIs não aponta uma configuração única como adequada a todos os usuários. Personalização, prototipagem iterativa e participação da população-alvo aparecem como elementos recorrentes no desenvolvimento de interfaces inclusivas \cite{frid2019}. Esse princípio é relevante para o presente trabalho porque a etapa realizada é técnica; a adequação perceptiva do mapeamento deverá ser investigada posteriormente com usuários.
+
+O EyeHarp exemplifica a possibilidade de dissociar o gesto convencional do controle musical. A interface emprega rastreamento ocular para permitir execução e composição por pessoas com limitações severas de movimento \cite{vamvakousis2016}. Outras propostas de instrumentos sem uso convencional das mãos discutem acessibilidade não apenas como capacidade de produzir notas, mas também em termos de expressividade e qualidade do controle \cite{davanzo2020}.
+
+A arquitetura desenvolvida nesta monografia segue a mesma lógica de separação funcional, embora mantenha um controlador comercial como entrada. A adaptação ocorre nas saídas: a interação MIDI é acompanhada por uma unidade vestível que fornece respostas vibrotátil e visual relacionadas à intensidade registrada pelo controlador.
+
+\section{Música, Treinamento e Deficiência Auditiva}
+
+A literatura reúne práticas distintas envolvendo música e pessoas surdas ou com deficiência auditiva. Treinamento musical, intervenções baseadas em música e musicoterapia possuem objetivos e protocolos diferentes e, por isso, não devem ser tratados como equivalentes.
+
+Experimentos com complementação vibrotátil mostram que estímulos táteis podem participar de atividades musicais com crianças com deficiência auditiva, especialmente em tarefas rítmicas \cite{darrowgoll1989,darrow1992}. Em crianças usuárias de implante coclear, atividades musicais também têm sido discutidas em relação a desenvolvimento perceptivo e participação musical \cite{gfeller2011}.
+
+Programas de treinamento musical foram avaliados em usuários de aparelhos auditivos e implantes cocleares. Uma revisão sistemática e meta-análise identificou efeitos positivos em algumas medidas de percepção musical, mas também registrou heterogeneidade entre métodos, participantes e protocolos \cite{abshukor2021}. Esses resultados não permitem transferir conclusões diretamente para uma interface vibrotátil específica, mas mostram que a experiência musical mediada por tecnologia constitui campo ativo de investigação.
+
+Nesta monografia, aplicações terapêuticas não são avaliadas. A interface é tratada como plataforma técnica para acessibilidade musical, e qualquer uso em musicoterapia depende de protocolos próprios, participação de profissionais da área e avaliação com a população-alvo.
+
+\section{Música e Reabilitação Motora}
+
+Instrumentos musicais digitais também aparecem em estudos de reabilitação motora. A execução musical envolve movimentos orientados a objetivos, repetição, coordenação e retorno sensorial, características que podem ser incorporadas a atividades de recuperação funcional.
+
+Treinamento com piano MIDI e \textit{pads} eletrônicos foi associado a melhorias em medidas de velocidade, precisão e suavidade de movimento após acidente vascular cerebral \cite{schneider2007}. Outro estudo piloto controlado avaliou terapia apoiada por música na recuperação de funções dos membros superiores e identificou melhora em determinadas medidas motoras \cite{tong2015}. A flexibilidade de interfaces MIDI para adaptação de tarefas e parâmetros também foi discutida no contexto de aplicações médicas \cite{kollar2017}.
+
+Abordagens distintas utilizam a sonificação como forma de realimentação. A associação entre movimentos do braço e respostas sonoras foi investigada em reabilitação neurológica, explorando a relação entre ação motora e retorno sensorial \cite{scholz2016}.
+
+Esses resultados mostram que tecnologias musicais podem sustentar diferentes estratégias de interação. Não constituem, porém, evidência clínica para o protótipo desenvolvido neste trabalho. A reabilitação motora permanece fora da validação realizada e é mencionada apenas como possibilidade de aplicação futura.
+
+\section{Trabalhos Correlatos e Estado da Arte}
+
+Entre os sistemas mais próximos da proposta desta monografia está o Auris System, desenvolvido para oferecer uma representação multissensorial da música a pessoas com deficiência auditiva \cite{araujo2017}. A arquitetura combina áudio processado, estímulos visuais e \textit{feedback} tátil e inclui uma pulseira com múltiplos motores vibratórios. Dados de áudio e MIDI são utilizados para compor a representação musical.
+
+A semelhança principal com o presente trabalho está no uso de um dispositivo corporal e de estímulos táteis associados à música. A diferença está na origem e no uso da variável de controle. No protótipo desenvolvido nesta monografia, a informação é obtida diretamente do gesto no MPD218: a \textit{velocity} é processada no momento do acionamento e utilizada para comandar as saídas física e visual, sem análise do conteúdo acústico.
+
+Interfaces hápticas multimodais e dispositivos vestíveis voltados à acessibilidade musical também foram investigados em processo de co-design com participante surda \cite{cavdir2024}. O estudo destaca que localização do estímulo, movimento corporal e participação do usuário influenciam a experiência e devem integrar etapas posteriores do desenvolvimento.
+
+Em perspectiva mais ampla, \textcite{paisa2023} identificaram diversidade de tecnologias e estratégias de mapeamento em displays táteis destinados à ampliação de sinais auditivos. A revisão também aponta limitações recorrentes, como amostras pequenas e avaliações concentradas em condições laboratoriais. Esses aspectos reforçam a necessidade de distinguir validação técnica de avaliação perceptiva.
+
+A Tabela~\ref{tab:estado_arte} sintetiza os trabalhos que apresentam relação mais direta com as decisões adotadas no projeto.
+
+\begin{table}[htbp]
+\centering
+\caption{Síntese de trabalhos relacionados à percepção e à interação musical vibrotátil}
+\label{tab:estado_arte}
+\small
+\begin{tabular}{p{2.8cm} p{3.3cm} p{4.1cm} p{5.0cm}}
+\hline
+\textbf{Trabalho} & \textbf{Público/Contexto} & \textbf{Abordagem} & \textbf{Contribuição para este trabalho} \\
+\hline
+Darrow e Goll (1989) &
+Crianças com deficiência auditiva &
+Complementação vibrotátil durante identificação rítmica &
+Evidencia a utilidade do tato na apresentação de alterações temporais. \\
+\hline
+Russo et al. (2012) &
+Participantes ouvintes e surdos &
+Discriminação de timbres por vibração &
+Mostra que diferenças entre sinais podem produzir padrões táteis discrimináveis. \\
+\hline
+Hopkins et al. (2016) &
+Adultos com audição normal e deficiência auditiva &
+Apresentação vibrotátil de notas musicais &
+Caracteriza capacidades e limites da pele para recepção de informação musical. \\
+\hline
+Tranchant et al. (2017) &
+Participantes surdos e ouvintes &
+Música apresentada por plataforma vibratória &
+Demonstra sincronização corporal com informação rítmica apresentada pelo tato. \\
+\hline
+Araujo et al. (2017) &
+Pessoas com deficiência auditiva &
+Cadeira e pulseira vibrotátil em sistema multissensorial &
+Fornece referência de arquitetura corporal voltada à acessibilidade musical. \\
+\hline
+Frid (2019) &
+Práticas musicais inclusivas &
+Revisão de instrumentos musicais digitais acessíveis &
+Contextualiza a solução no campo dos ADMIs e enfatiza adaptação ao usuário. \\
+\hline
+Paisa et al. (2023) &
+Ampliação tátil de áudio e música &
+Revisão de 63 displays táteis &
+Sistematiza atuadores, locais de aplicação, mapeamentos e limitações experimentais. \\
+\hline
+Cavdir (2024) &
+Acessibilidade musical &
+Interfaces hápticas multimodais e dispositivos vestíveis &
+Destaca localização corporal, co-design e experiência multissensorial. \\
+\hline
+\end{tabular}
+\legend{Fonte: Elaboração própria (2026).}
+\end{table}
+
+Os trabalhos correlatos demonstram que vibração, estímulos visuais e dispositivos vestíveis já integram diferentes propostas de acessibilidade musical. A contribuição desta monografia não consiste no uso isolado de \textit{feedback} vibrotátil. O foco está na implementação e na validação de uma cadeia específica em que a intensidade do gesto é obtida diretamente de uma interface MIDI, processada em tempo de interação e convertida em um comando comum para saídas tátil e visual.
+
+A unidade vestível incorpora alimentação própria e recebe os comandos por Wi-Fi. Essa configuração mantém separadas a interface de entrada, conectada ao computador, e a saída sensorial posicionada no corpo, permitindo avaliar tecnicamente cada módulo da arquitetura.
+
+\section{Síntese da Literatura e Lacuna de Pesquisa}
+
+A literatura revisada demonstra que o tato pode representar propriedades específicas da atividade musical, sobretudo aquelas relacionadas ao tempo e à intensidade, e que dispositivos vestíveis constituem uma alternativa para apresentar essas informações sem ocupar as mãos do usuário. Os estudos também mostram que desempenho e preferência dependem da estratégia de mapeamento, do atuador, da região corporal e do perfil do participante.
+
+Sistemas multissensoriais voltados à acessibilidade musical já combinam áudio, vibração e recursos visuais. A lacuna tratada nesta monografia é, por isso, tecnológica e experimental: avaliar uma arquitetura em que a intensidade do gesto é adquirida diretamente de um controlador MIDI e utilizada para comandar uma unidade vestível com \textit{feedback} vibrotátil e visual, comunicação sem fio e alimentação local.
+
+A validação realizada não busca demonstrar benefício perceptivo, terapêutico ou clínico. Ela estabelece se a cadeia técnica funciona de maneira coerente e se as variáveis de entrada e saída apresentam respostas mensuráveis nas condições de ensaio. O Capítulo 3 detalha a arquitetura empregada para essa finalidade.

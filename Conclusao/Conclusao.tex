@@ -1,0 +1,47 @@
+\chapter{Conclusões}
+
+\section{Considerações Finais}
+\markright{Conclusões}
+\label{sec:consideracoes_finais}
+
+O objetivo deste trabalho foi desenvolver e validar tecnicamente uma interface musical digital multissensorial capaz de transformar informações do gesto no controlador Akai MPD218 em comandos para um motor vibrotátil e um LED incorporados a uma unidade vestível. Os resultados permitem responder afirmativamente à questão de viabilidade funcional proposta na Introdução, nas condições de implementação e ensaio descritas.
+
+A cadeia composta por aquisição MIDI, processamento em Python, transmissão UDP sobre Wi-Fi, controle pelo ESP32 e acionamento das saídas foi verificada em etapas e em operação integrada. As simulações fundamentaram o circuito de proteção e o uso do PWM; os ensaios controlados caracterizaram relações mensuráveis entre altura de queda e \textit{velocity}, bem como entre PWM e frequência acústica associada ao motor. A alimentação por baterias permitiu a operação da unidade vestível sem conexão USB com o computador.
+
+A caracterização experimental também indicou a necessidade de rever o mapeamento inicial que emprega referência superior de \textit{velocity} igual a 30, pois essa escolha antecipa a saturação dos comandos. O mapeamento de faixa completa utilizado nos ensaios constitui uma alternativa documentada, ainda não submetida a uma avaliação perceptiva.
+
+A principal contribuição reside na arquitetura implementada e no conjunto de procedimentos técnicos disponibilizados para sua reprodução. O sistema representa ocorrência, duração e intensidade relativa de eventos MIDI, sem converter o conteúdo sonoro em uma reprodução tátil ou luminosa equivalente. A viabilidade demonstrada não permite concluir que a interface melhore a percepção musical de pessoas surdas ou com deficiência auditiva; essa avaliação exige participação da população-alvo em estudos específicos.
+
+\section{Limitações do Protótipo}
+\markright{Conclusões}
+\label{sec:limitacoes_prototipo}
+
+A principal limitação da caracterização vibrotátil é a ausência de medição inercial direta. O registro com microfone permitiu acompanhar a frequência acústica associada ao motor, mas não forneceu valores de aceleração, deslocamento ou amplitude de vibração. A relação entre PWM e intensidade mecânica transmitida à pele não foi quantificada.
+
+A sequência do ensaio acústico foi executada sempre em ordem crescente de PWM. Variações entre repetições podem incluir efeitos de tempo de funcionamento, aquecimento, condição da alimentação ou acoplamento mecânico e acústico. A correlação observada sustenta a tendência entre comando e frequência registrada, mas não separa essas fontes de variabilidade.
+
+O canal visual foi validado funcionalmente, sem medição fotométrica ou estudo de equivalência perceptiva com o canal tátil. O uso do mesmo valor PWM representa apenas uma estratégia comum de controle.
+
+A comunicação UDP não foi caracterizada quanto à latência fim a fim, e os testes não abrangeram diferentes redes, distâncias ou condições de interferência. A alimentação embarcada também não foi avaliada em termos de autonomia, consumo médio, eficiência do conversor ou temperatura em operação prolongada.
+
+A estrutura vestível foi utilizada como suporte experimental. Conforto prolongado, distribuição de massa, pressão de contato, estabilidade durante movimentos e posicionamento ótimo do motor não foram avaliados por protocolo específico.
+
+A configuração física utilizou um único motor vibrotátil. Não foram avaliados arranjos com múltiplos atuadores, codificação espacial de eventos ou distribuição dos estímulos entre regiões do corpo.
+
+Não foram realizados ensaios formais com pessoas surdas ou com deficiência auditiva. O trabalho não determina limiares de percepção, capacidade de discriminação entre níveis de estímulo, compreensão de padrões rítmicos, conforto de uso ou contribuição efetiva para a experiência musical. A validação é estritamente técnica.
+
+\section{Propostas de Continuidade}
+\markright{Conclusões}
+\label{sec:propostas_continuidade}
+
+A continuidade técnica mais direta consiste em medir a resposta do motor com acelerômetro fixado à estrutura vestível. Essa instrumentação permitiria relacionar o comando PWM à aceleração, à frequência mecânica e à amplitude do estímulo em condições controladas.
+
+O mapeamento entre \textit{velocity} e PWM também deve ser revisto. Os ensaios mostraram que a referência superior igual a 30 comprime parte relevante da faixa dinâmica do MPD218. A distribuição da faixa completa de 1 a 127, ou uma função não linear ajustada experimentalmente, pode reduzir a saturação e preservar diferenças entre níveis de interação.
+
+Novos ensaios do motor podem empregar ordem randomizada dos valores PWM, maior número de repetições e medição simultânea de tensão, corrente e aceleração. No canal visual, medições fotométricas permitiriam caracterizar a relação entre PWM e brilho e, posteriormente, definir mapeamentos independentes para as modalidades tátil e visual.
+
+A latência fim a fim também pode ser medida com uma referência temporal comum entre o acionamento do pad e as saídas físicas. Esse procedimento permitiria separar os atrasos de aquisição MIDI, processamento em Python, transmissão Wi-Fi, recepção pelo ESP32 e atuação.
+
+Na alimentação, ensaios de autonomia, consumo e temperatura podem orientar a escolha das células e a evolução para uma placa dedicada e uma estrutura mais compacta. A integração mecânica também pode ser refinada para reduzir volume e melhorar o contato do atuador com a pele.
+
+A etapa decisiva para o objetivo de acessibilidade é a avaliação participativa com pessoas surdas ou com deficiência auditiva. Estudos futuros podem investigar discriminação de intensidade, pulsação, ritmo e padrões temporais, além de conforto, preferência e facilidade de aprendizagem. A participação da população-alvo e de profissionais ligados à comunidade surda pode orientar decisões de mapeamento que não podem ser estabelecidas apenas por ensaios técnicos.

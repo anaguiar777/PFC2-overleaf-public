@@ -1,0 +1,33 @@
+\begin{circuitikz}[european resistors, font=\small]
+  % Canal vibrotátil: MOSFET canal N em chaveamento low-side
+  \node[font=\bfseries] at (6.45,6.2) {Canal vibrotátil --- motor Vibracall 1027};
+  \node[nmos, scale=1.35] (Q1) at (7.15,2.1) {};
+  % Dreno conectado ao motor, com a outra extremidade no positivo
+  \draw (Q1.D) -- (7.15,3.45);
+  \node[draw,circle,minimum size=11mm,inner sep=0pt] (M) at (7.15,4.25) {M};
+  \draw (7.15,3.45) -- (M.south);
+  \draw (M.north) -- (7.15,5.25) -- (9.7,5.25) node[right] {$+3{,}3\,\mathrm{V}$};
+  % Diodo 1N5819 em antiparalelo: cátodo no positivo
+  \draw (7.15,3.45) -- (9.20,3.45) to[D] (9.20,5.25);
+  \fill (7.15,3.45) circle (1.6pt);
+  \fill (9.20,5.25) circle (1.6pt);
+  \node[anchor=west] at (10.0,4.30) {D1 --- 1N5819};
+  \node[anchor=west,font=\footnotesize] at (10.0,3.88) {cátodo em $+3{,}3\,\mathrm{V}$};
+  % Source ligado ao GND
+  \draw (Q1.S) -- (7.15,0.85) node[ground] {};
+  % Gate com resistor em série e pull-down
+  \draw (1.0,2.1) node[left]{GPIO 18} to[R,l^={$220\,\Omega$}] (3.65,2.1) -- (Q1.G);
+  \fill (5.15,2.1) circle (1.6pt);
+  \draw (5.15,2.1) to[R,l_={$47\,\mathrm{k}\Omega$}] (5.15,0.85) node[ground] {};
+  % Terminais explícitos do MOSFET
+  \node[anchor=west,font=\footnotesize] at (7.45,3.02) {D};
+  \node[anchor=west,font=\footnotesize] at (7.45,1.22) {S};
+  \node[anchor=east,font=\footnotesize] at (6.34,2.46) {G};
+  \node[anchor=west] at (8.0,2.15) {Q1 --- IRLZ44N};
+  % Saída visual independente
+  \draw[gray,dashed] (0.5,-0.05) -- (13.0,-0.05);
+  \node[font=\bfseries] at (6.45,-0.7) {Canal visual --- LED de alto brilho};
+  \draw (1.0,-2.4) node[left]{GPIO 21} to[R,l^={$220\,\Omega$}] (3.65,-2.4)
+    -- (7.15,-2.4) to[led] (7.15,-4.15) node[ground] {};
+  \node[anchor=west] at (7.85,-3.25) {LED};
+\end{circuitikz}

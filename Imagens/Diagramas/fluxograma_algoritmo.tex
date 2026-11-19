@@ -1,0 +1,29 @@
+\begin{tikzpicture}[
+ >=Latex,node distance=6mm and 7mm,
+ caixa/.style={draw,rounded corners=2pt,align=center,font=\footnotesize,minimum height=8mm,text width=35mm,fill=black!3},
+ decisao/.style={diamond,aspect=2.15,draw,align=center,font=\footnotesize,inner sep=1pt,text width=27mm,fill=black!3},
+ seta/.style={-Latex,thick},
+ nota/.style={font=\scriptsize,fill=white,inner sep=1pt}
+]
+\node[caixa] (midi) {Evento MIDI do MPD218};
+\node[decisao,below=10mm of midi] (on) {\texttt{note\_on} e \textit{velocity} $>0$?};
+\node[decisao,below left=12mm and 20mm of on] (off) {\texttt{note\_off} ou \textit{velocity} $=0$?};
+\node[decisao,below right=12mm and 20mm of on] (db) {Intervalo $\geq 0{,}08$ s?};
+\node[caixa,below=12mm of off] (sendoff) {Enviar \texttt{OFF} por UDP};
+\node[caixa,below=12mm of db] (map) {Calcular PWM proporcional; limitar a 80--255};
+\node[caixa,below=7mm of map] (sendon) {Atualizar interface e CSV; enviar \texttt{ON,PWM}};
+\node[caixa,below=14mm of sendoff] (zero) {ESP32 aplica PWM 0 ao motor e LED};
+\node[caixa,below=7mm of sendon] (motor) {ESP32 aplica PWM aos GPIO 18 e 21};
+\draw[seta] (midi) -- (on);
+\draw[seta] (on) -| node[nota,pos=.22] {Não} (off);
+\draw[seta] (on) -| node[nota,pos=.22] {Sim} (db);
+\draw[seta] (off) -- node[nota] {Sim} (sendoff);
+\draw[seta] (db) -- node[nota] {Sim} (map);
+\draw[seta] (sendoff) -- (zero);
+\draw[seta] (map) -- (sendon);
+\draw[seta] (sendon) -- (motor);
+\node[nota,below=1mm of zero] {Ambas as saídas desligadas};
+\node[nota,below=1mm of motor] {Resposta vibrotátil e visual};
+\draw[seta] (off.west) -- ++(-9mm,0) node[nota,anchor=east] {Não: ignorar};
+\draw[seta] (db.east) -- ++(9mm,0) node[nota,anchor=west] {Não: ignorar};
+\end{tikzpicture}

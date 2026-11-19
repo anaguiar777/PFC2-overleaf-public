@@ -1,0 +1,107 @@
+\documentclass[
+  12pt,
+  a4paper,
+  oneside
+]{abntex2}
+
+\usepackage{tabularx}
+\usepackage{float}
+
+% ----------------------------------------------------
+% Codificação e idioma
+% ----------------------------------------------------
+\usepackage[T1]{fontenc}
+\usepackage[english,brazil]{babel}
+
+% ----------------------------------------------------
+% Símbolos de texto
+% ----------------------------------------------------
+\usepackage{textcomp}
+
+% ----------------------------------------------------
+% Fontes e layout
+% ----------------------------------------------------
+\usepackage{lmodern}
+\usepackage{indentfirst}
+\usepackage{microtype}
+
+% ----------------------------------------------------
+% Gráficos e cores
+% ----------------------------------------------------
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{url}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{tikz}
+\usetikzlibrary{positioning,arrows.meta,shapes.geometric,calc}
+\usepackage{circuitikz}
+
+% ----------------------------------------------------
+% Matemática
+% ----------------------------------------------------
+\usepackage{amsmath,amssymb}
+
+% ----------------------------------------------------
+% Referências — ABNT
+% NBR 10520:2023 (citações) e NBR 6023:2025 (referências)
+% ----------------------------------------------------
+\usepackage[
+  backend=biber,
+  style=abnt,
+  accite=false
+]{biblatex}
+\addbibresource{bibliografia.bib}
+
+% ----------------------------------------------------
+% Margens
+% ----------------------------------------------------
+\usepackage[
+  a4paper,
+  top=30mm,
+  bottom=20mm,
+  left=30mm,
+  right=20mm
+]{geometry}
+
+% ----------------------------------------------------
+% Ajustes de parágrafo
+% ----------------------------------------------------
+\setlength{\parindent}{1.25cm}
+\setlength{\parskip}{0cm}
+
+\begin{document}
+
+\include{Capa/capa}
+
+\OnehalfSpacing
+
+% Elementos pré-textuais
+\include{Agradecimentos/Agradecimentos}
+\include{Resumo/Resumo}
+\include{Resumo/Abstract}
+\include{ListaFiguras/ListaFiguras}
+\include{ListaTabelas/ListaTabelas}
+\include{TabelaConteudo/TabelaConteudo}
+
+\textual
+
+% Elementos textuais
+\include{Introducao/Introducao}
+\include{RevisaoBibliografica/RevisaoBibliografica}
+\include{DescricaoProcesso/DescricaoProcesso}
+\include{Metodologia/Metodologia}
+\include{Resultados/Resultados}
+\include{Conclusao/Conclusao}
+
+% Elementos pós-textuais
+\postextual
+\begin{SingleSpace}
+\setlength{\bibitemsep}{\baselineskip}
+\printbibliography[heading=bibintoc,title={Referências}]
+\end{SingleSpace}
+
+% Apêndice com documentação complementar de reprodução
+\include{Apendices/ApendiceA}
+
+\end{document}

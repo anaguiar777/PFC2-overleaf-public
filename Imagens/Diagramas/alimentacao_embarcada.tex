@@ -1,0 +1,22 @@
+\begin{tikzpicture}[
+ >=Latex,node distance=5mm and 6mm,
+ bloco/.style={draw,rounded corners=3pt,align=center,text width=29mm,minimum height=14mm,font=\small,fill=black!4},
+ linha/.style={-Latex,thick}
+]
+\node[bloco] (bat) {Duas células\\18650 (2S)};
+\node[bloco,right=of bat] (bms) {Proteção\\BMS 2S};
+\node[bloco,right=of bms] (dc) {Conversor\\MP1584EN};
+\node[bloco,right=of dc] (barr) {Barramento\\$+3{,}3$ V / GND};
+\draw[linha] (bat) -- (bms);
+\draw[linha] (bms) -- (dc);
+\draw[linha] (dc) -- (barr);
+\node[bloco,below=14mm of barr] (esp) {ESP32-WROOM-32\\alimentação};
+\node[bloco,left=of esp] (motor) {Estágio MOSFET\\e motor};
+\node[bloco,left=of motor] (led) {LED e resistor\\limitador};
+\coordinate (ramo) at ($(barr.south)+(0,-0.35)$);
+\draw (barr.south) -- (ramo);
+\draw[linha] (ramo) -- (esp.north);
+\draw[linha] (ramo) -| (motor.north);
+\draw[linha] (ramo) -| (led.north);
+\node[font=\scriptsize,below=6mm of motor,align=center] {Os três ramos compartilham\\a referência de GND.};
+\end{tikzpicture}

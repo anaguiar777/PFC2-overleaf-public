@@ -1,0 +1,55 @@
+\chapter{Introdução}
+
+A música integra práticas culturais, atividades recreativas e formas de expressão emocional e convivência social. O acesso à experiência musical, entretanto, pode ocorrer de maneiras distintas entre pessoas ouvintes, surdas ou com deficiência auditiva, o que motiva a investigação de recursos que ampliem as possibilidades de participação e interação.
+
+A experiência musical envolve processos perceptivos, motores e cognitivos que não se restringem ao canal auditivo. Ritmo, intensidade e organização temporal podem ser representados por estímulos táteis e visuais, o que amplia as possibilidades de interação musical para pessoas surdas ou com deficiência auditiva. Estudos com estímulos vibrotáteis mostram que o tato pode transmitir informações temporais relevantes para a sincronização e para a identificação de mudanças rítmicas, ainda que não reproduza a experiência auditiva em sua totalidade \cite{darrowgoll1989,tranchant2017,fletcher2021}.
+
+Essa distinção orienta a proposta deste trabalho. A interface desenvolvida não pretende converter o conteúdo sonoro de uma música em uma reprodução tátil ou visual equivalente, nem estabelecer correspondência direta entre nota musical, timbre, frequência sonora e frequência de vibração. O objetivo é representar, por modalidades sensoriais adicionais, informações associadas à própria interação com o instrumento, como a ocorrência dos eventos, sua intensidade relativa e sua organização temporal.
+
+Instrumentos musicais digitais oferecem condições favoráveis para esse tipo de abordagem porque disponibilizam parâmetros da execução antes da geração do áudio. No protocolo MIDI (\textit{Musical Instrument Digital Interface}), eventos de acionamento podem incluir a identificação da nota e o parâmetro \textit{velocity}, codificado digitalmente e relacionado à intensidade do gesto realizado sobre a interface \cite{midi1996}. Esse parâmetro pode ser utilizado como variável de entrada para sistemas de \textit{feedback} que operem de forma paralela à produção sonora.
+
+A arquitetura proposta utiliza o controlador Akai MPD218 como interface musical de entrada. Os eventos MIDI são adquiridos por software desenvolvido em Python, que identifica o \textit{pad} acionado, processa o valor de \textit{velocity} e calcula o comando PWM correspondente. O comando é transmitido por UDP sobre rede Wi-Fi a uma unidade embarcada baseada no ESP32. Na configuração final, o microcontrolador controla um motor vibrotátil Vibracall 1027 e um LED de alto brilho por saídas independentes, utilizando o mesmo valor digital como referência para as duas modalidades.
+
+A unidade embarcada foi integrada a uma estrutura vestível posicionada no membro superior e alimentada localmente por duas células de íons de lítio em configuração 2S, um módulo BMS e um conversor DC--DC. Durante a operação normal, não há cabo de alimentação ou de dados entre o computador e a unidade vestível. O MPD218, entretanto, permanece conectado ao computador por USB, razão pela qual a arquitetura não é caracterizada como integralmente sem fio.
+
+A validação concentra-se na viabilidade técnica da cadeia de aquisição, processamento, comunicação e atuação. Não foram realizados estudos perceptivos com pessoas surdas ou com deficiência auditiva, nem avaliações clínicas ou terapêuticas. As conclusões referem-se ao funcionamento da plataforma e às relações experimentais observadas entre as variáveis utilizadas no sistema.
+
+\section{Motivação e Justificativa}
+
+Interfaces musicais convencionais utilizam o som como principal forma de retorno ao usuário. Para pessoas surdas ou com deficiência auditiva, parte das informações presentes na execução pode não estar disponível pelo mesmo canal ou com a mesma resolução perceptiva. Dispositivos auditivos contribuem de forma relevante para comunicação e percepção sonora, mas a música reúne estruturas espectrais e temporais cuja transmissão pode permanecer limitada em determinadas condições \cite{fletcher2021}.
+
+A literatura sobre acessibilidade musical descreve diferentes estratégias para complementar a informação auditiva. Estímulos vibrotáteis foram empregados na identificação de mudanças rítmicas, na apresentação de notas e timbres e na sincronização corporal com pulsação musical \cite{darrowgoll1989,hopkins2016,russo2012,tranchant2017}. Esses resultados não indicam equivalência entre audição e tato, mas demonstram que propriedades específicas da atividade musical podem ser disponibilizadas por outros canais sensoriais.
+
+O \textit{feedback} visual constitui uma segunda possibilidade de representação. Em uma interface multissensorial, uma variável de interação pode comandar simultaneamente modalidades distintas, desde que essa associação seja tratada como correspondência funcional e não como equivalência perceptiva. No protótipo desenvolvido, o motor e o LED compartilham o mesmo valor digital de controle, mas não se assume que determinado nível de vibração corresponda subjetivamente a determinado nível de brilho.
+
+A utilização de uma unidade vestível preserva as mãos para a execução no controlador MIDI e permite que o estímulo tátil seja aplicado diretamente ao corpo. A comunicação sem fio entre o computador e a unidade embarcada reduz conexões físicas durante a interação, enquanto a alimentação própria torna o módulo independente da porta USB do computador.
+
+A motivação do trabalho decorre, assim, da integração de cinco elementos em uma mesma plataforma experimental: uma interface MIDI sensível à intensidade do gesto, processamento computacional, comunicação sem fio, controle embarcado e \textit{feedback} físico multissensorial. A questão de pesquisa adotada é: \textit{é tecnicamente viável converter a intensidade do gesto realizado sobre uma interface MIDI em \textit{feedback} vibrotátil e visual simultâneo por meio de uma unidade vestível com comunicação sem fio e alimentação embarcada?}
+
+Aplicações em musicoterapia e reabilitação motora aparecem na literatura como contextos possíveis para instrumentos musicais digitais e estímulos sensoriais. Esses campos não integram, porém, o escopo de validação desta monografia e são tratados apenas como possibilidades de investigação futura.
+
+\section{Objetivos do Projeto}
+
+\subsection{Objetivo Geral}
+
+Desenvolver e validar tecnicamente uma interface musical digital multissensorial baseada no controlador MIDI Akai MPD218, integrada a uma unidade vestível capaz de relacionar a intensidade da interação musical a \textit{feedback} vibrotátil e visual, com processamento computacional, comunicação sem fio, controle embarcado e alimentação própria.
+
+\subsection{Objetivos Específicos}
+
+Para alcançar o objetivo geral, o trabalho compreende a aquisição e o processamento dos eventos MIDI em Python; a utilização do parâmetro \textit{velocity} como variável de entrada; o desenvolvimento do mapeamento entre \textit{velocity} e PWM; a implementação da comunicação UDP sobre Wi-Fi entre computador e ESP32; o desenvolvimento do estágio de acionamento do motor Vibracall 1027 e do canal visual com LED de alto brilho; a integração desses elementos a uma unidade vestível com alimentação própria; o desenvolvimento de uma interface gráfica para acompanhamento dos eventos; e a validação experimental da lógica de controle, da comunicação, das saídas físicas e da operação integrada da arquitetura.
+
+A validação também busca verificar, de forma controlada, se condições mecânicas de entrada progressivamente maiores produzem respostas crescentes de \textit{velocity} no MPD218 e se diferentes níveis de PWM estão associados a mudanças mensuráveis no funcionamento do atuador. Essas avaliações permanecem no domínio técnico e não substituem estudos perceptivos com usuários.
+
+\section{Local de Realização}
+
+O presente trabalho foi desenvolvido no âmbito do Curso de Graduação em Engenharia de Controle e Automação da Universidade Federal de Minas Gerais (UFMG), sob orientação acadêmica do professor Renan Fernandes Kozan. A temática do projeto está relacionada às áreas de engenharia de reabilitação e tecnologias assistivas, contempladas pelo Laboratório de Engenharia Biomédica (LEB), vinculado ao Departamento de Engenharia Elétrica da UFMG.
+
+As atividades desenvolvidas compreenderam pesquisa bibliográfica, implementação computacional, dimensionamento e montagem de circuitos eletrônicos, integração dos componentes do protótipo e realização de ensaios experimentais para validação técnica da interface musical multissensorial.
+
+\section{Estrutura da Monografia}
+
+A monografia está organizada em seis capítulos. O Capítulo 1 apresenta o problema, a motivação, os objetivos e o escopo da pesquisa. O Capítulo 2 reúne os fundamentos teóricos e a revisão bibliográfica sobre percepção musical, estímulos vibrotáteis, interfaces hápticas, instrumentos musicais digitais acessíveis e aplicações correlatas.
+
+O Capítulo 3 descreve os fundamentos técnicos e a arquitetura do sistema, incluindo a interface MIDI, a comunicação UDP sobre Wi-Fi, o ESP32 e os canais vibrotátil e visual. O Capítulo 4 apresenta a metodologia de desenvolvimento, a seleção dos componentes, o dimensionamento eletrônico, a implementação computacional, a organização física do protótipo e os procedimentos experimentais empregados na validação.
+
+O Capítulo 5 reúne os resultados das simulações, da implementação computacional, da comunicação e dos ensaios físicos, incluindo a caracterização da resposta do MPD218 e do motor vibrotátil. O Capítulo 6 apresenta as conclusões, as limitações do protótipo e as propostas de continuidade. Os materiais disponibilizados para reprodução técnica do projeto estão identificados no Apêndice A.
